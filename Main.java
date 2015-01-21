@@ -19,8 +19,6 @@ public class Main extends JFrame implements ActionListener{
     JRadioButton three = new JRadioButton("3");    
     JRadioButton four = new JRadioButton("4");    
     JRadioButton five = new JRadioButton("5");    
-
-    
   }
 
   public static void main(String[] args) {
