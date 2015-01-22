@@ -13,14 +13,19 @@ public class Main extends JFrame implements ActionListener{
     frame.setSize(800, 600);
     frame.setVisible(true);
 
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));  //Vertical Panel
+
     //New Task Button
     JButton addTask = new JButton("New Task");
-    frame.getContentPane().add(BorderLayout.SOUTH, addTask);    
     addTask.addActionListener(this); //Listen to click
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
-    frame.getContentPane().add(BorderLayout.EAST, startTimer);
+
+    panel.add(addTask);
+    panel.add(startTimer);
+    frame.getContentPane().add(BorderLayout.EAST, panel);
   }
 
 
@@ -32,21 +37,23 @@ public class Main extends JFrame implements ActionListener{
     taskFrame.setVisible(true);
 
     //Panel
-    JPanel panel = new JPanel();
-    panel.setBackground(Color.darkGray);
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));  //Vertical Panel
+    JPanel taskPanel = new JPanel();
+    taskPanel.setBackground(Color.darkGray);
+    taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));  //Vertical Panel
     
     //Task Details
-    JTextField name = new JTextField("Name: ");
-    JComboBox<String> priority = new JComboBox<String>();
+    JTextField name = new JTextField("Name: "); 
+    JComboBox<String> priority = new JComboBox<String>(); //Drop Down Menu
     priority.addItem("Important");
     priority.addItem("Not Important");
+    JButton submit = new JButton("Submit"); //Submit button, close window, MUST ADD SAVE INFO
 
     //Add Text Field/Radial Buttons
-    panel.add(name);
-    panel.add(priority);
+    taskPanel.add(name);
+    taskPanel.add(priority);
+    taskPanel.add(submit);
 
-    taskFrame.getContentPane().add(panel);
+    taskFrame.getContentPane().add(taskPanel);
   }
 
   public static void main(String[] args) {
