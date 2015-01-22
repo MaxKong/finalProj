@@ -28,7 +28,6 @@ public class Main extends JFrame implements ActionListener{
     frame.getContentPane().add(BorderLayout.EAST, panel);
   }
 
-
   public void actionPerformed(ActionEvent event) { //New Task Button
     //Frame
     JFrame taskFrame = new JFrame();
@@ -66,7 +65,6 @@ public class Main extends JFrame implements ActionListener{
 
     //Add Panel and Fit Window to Content
     taskFrame.getContentPane().add(taskPanel);
-
   }
 
   public static void main(String[] args) {
