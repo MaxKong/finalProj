@@ -24,20 +24,22 @@ public class FileCreate{
     //opens file
     public void openFile(){
         try{
-            x = new Scanner(new File ("newFile.csv"));
+            s = new Scanner(new File ("newFile.csv"));
         }
         catch(Exception e){
             System.out.println("error!");
         }
     }
-    //reads File
-    public void readFile(){
-        while(x.hasNext()){
-            readString = x.next();
+    //reads File and returns a string of whatever was in the file
+    public String readFile(){
+        while(s.hasNext()){
+            readString = s.next();
         }
+        return readString;
     }
+    //closes file
     public void closeFile(){
-        f.close();
+        s.close();
     }
     
     
@@ -46,6 +48,6 @@ public class FileCreate{
         f.openFile();
         f.readFile();
         f.closeFile();
-        System.out.println(readString);
+        
     }
 }
