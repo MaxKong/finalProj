@@ -5,12 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main extends JFrame implements ActionListener{
+  Font littleFont = new Font ("Heletica", Font.BOLD, 60);
+  
   public Main() {
     //Main Frame
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
     JFrame frame = new JFrame();
     frame.setTitle("Time Planner");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(800, 600);
+    frame.setSize(screenSize.width / 2, screenSize.height / 2);
     frame.setVisible(true);
 
     JPanel panel = new JPanel();
@@ -19,11 +23,13 @@ public class Main extends JFrame implements ActionListener{
     //New Task Button
     JButton addTask = new JButton("New Task");
     addTask.addActionListener(new NewTask()); //Listen to click
+    addTask.setFont(littleFont);
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
     Timer timer = new Timer(2,0);
     startTimer.addActionListener(timer);
+    startTimer.setFont(littleFont);
 
     panel.add(addTask);
     panel.add(startTimer);
@@ -49,21 +55,30 @@ public class Main extends JFrame implements ActionListener{
       taskFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
       taskFrame.setVisible(true);
       
-      //Panel
+      //Overarching Panel
       JPanel taskPanel = new JPanel();
       taskPanel.setBackground(Color.gray);
       taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));  //Vertical Panel
       
       //Task Details ------------------------------------------
 
+      //First Line
+
       //TextBox
+      JPanel firstLine = new JPanel();
       JLabel metaName = new JLabel("Name: ");
+      metaName.setFont(littleFont);
       taskName = new JTextField(20); 
       //One line Size
       taskName.setMaximumSize(new Dimension(Integer.MAX_VALUE, taskName.getMinimumSize().height));
       
+
+      //Second Line
+
       //Drop Down Menu
-      JLabel importance = new JLabel("Priority (1: Lowest, 5: highest): ");
+      JPanel secondLine = new JPanel();
+      JLabel importance = new JLabel("Priority Level");
+      importance.setFont(littleFont);
       priority = new JComboBox<String>(); //Drop Down Menu
       //One line Size
       priority.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
@@ -73,16 +88,26 @@ public class Main extends JFrame implements ActionListener{
       priority.addItem("4");
       priority.addItem("5");
       
+
+      //Third Line
+      
+      JPanel thirdLine = new JPanel();
       JButton submit = new JButton("Submit"); //Submit button, close window, MUST ADD SAVE INFO
       submit.addActionListener(new SubmitListener());
+      submit.setFont(littleFont);
 
       //Add to Panel
-      taskPanel.add(metaName);
-      taskPanel.add(taskName);
-      taskPanel.add(importance);
-      taskPanel.add(priority);
-      taskPanel.add(submit);
+      firstLine.add(metaName);
+      firstLine.add(taskName);
+      secondLine.add(importance);
+      secondLine.add(priority);
+      thirdLine.add(submit);
       
+      //Add to Overarching Panel
+      taskPanel.add(firstLine);
+      taskPanel.add(secondLine);
+      taskPanel.add(thirdLine);
+
       //Add Panel and Fit Window to Content
       taskFrame.getContentPane().add(taskPanel);
     
