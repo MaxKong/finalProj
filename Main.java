@@ -13,27 +13,34 @@ public class Main extends JFrame implements ActionListener{
 
     JFrame frame = new JFrame();
     frame.setTitle("Time Planner");
+    System.out.println("We just made the frame");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(screenSize.width / 2, screenSize.height / 2);
     frame.setVisible(true);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));  //Vertical Panel
+    System.out.println("we made the panel");
 
     //New Task Button
     JButton addTask = new JButton("New Task");
     addTask.addActionListener(new NewTask()); //Listen to click
     addTask.setFont(littleFont);
+    System.out.println("New Task");
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
     Timer timer = new Timer(2,0);
     startTimer.addActionListener(timer);
     startTimer.setFont(littleFont);
+    System.out.println("Start Timer");
 
     panel.add(addTask);
+    System.out.println("added Task");
     panel.add(startTimer);
+    System.out.println("added Start Timer");
     frame.getContentPane().add(BorderLayout.EAST, panel);
+    System.out.println("Get Content Pane thing");
   }
   
   public void actionPerformed(ActionEvent event) { //Possibly for Displaying Added Tasks (Max's Text File)
