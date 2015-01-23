@@ -33,8 +33,13 @@ public class Main extends JFrame implements ActionListener{
   }
 
   class NewTask implements ActionListener {
-    JFrame taskFrame; //So Submit button can detect and close it
+    //So Submit can detect amd save/close
+    JFrame taskFrame; 
+    JTextField taskName; 
+    JComboBox<String> priority;
 
+    String name;
+    String prioritySelection;
     public void actionPerformed(ActionEvent event) { //New Task Button
       //Frame
       taskFrame = new JFrame();
@@ -50,14 +55,14 @@ public class Main extends JFrame implements ActionListener{
       //Task Details ------------------------------------------
 
       //TextBox
-      JLabel taskName = new JLabel("Name: ");
-      JTextField nameText = new JTextField(20); 
+      JLabel metaName = new JLabel("Name: ");
+      taskName = new JTextField(20); 
       //One line Size
-      nameText.setMaximumSize(new Dimension(Integer.MAX_VALUE, nameText.getMinimumSize().height));
+      taskName.setMaximumSize(new Dimension(Integer.MAX_VALUE, taskName.getMinimumSize().height));
       
       //Drop Down Menu
       JLabel importance = new JLabel("Priority (1: Lowest, 5: highest): ");
-      JComboBox<String> priority = new JComboBox<String>(); //Drop Down Menu
+      priority = new JComboBox<String>(); //Drop Down Menu
       //One line Size
       priority.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
       priority.addItem("1");
@@ -70,8 +75,8 @@ public class Main extends JFrame implements ActionListener{
       submit.addActionListener(new SubmitListener());
 
       //Add to Panel
+      taskPanel.add(metaName);
       taskPanel.add(taskName);
-      taskPanel.add(nameText);
       taskPanel.add(importance);
       taskPanel.add(priority);
       taskPanel.add(submit);
@@ -83,6 +88,11 @@ public class Main extends JFrame implements ActionListener{
 
       class SubmitListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
+          //Get Name
+          name = taskName.getText();
+          prioritySelection = (String)(priority.getSelectedItem());
+          
+          //Close Window
           taskFrame.dispose();
         }
       }
