@@ -4,12 +4,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class Timer extends JFrame implements ActionListener {
     
   protected int minutes;
   protected int seconds;
   protected int totalTime;
   protected int elapsedTime; 
+  protected JLabel label;
 
   public Timer() {
     minutes = 0;
@@ -77,7 +79,7 @@ public class Timer extends JFrame implements ActionListener {
     panel.setBackground(Color.gray);
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); //Vertical Box Layout
 
-    JLabel label = new JLabel( secondsToMinutes(totalTime) );
+    label = new JLabel( secondsToMinutes(totalTime) );
     JButton button = new JButton( "PAUSE" );
 
     panel.add(label);
@@ -92,10 +94,25 @@ public class Timer extends JFrame implements ActionListener {
     frame.setVisible(true);
 
     /*    while (elapsedTime < totalTime) {
-      System.out.println(countDown());
-      label.setText(countDown());
+          System.out.println(countDown());
+          label.setText(countDown());
 
-      }*/
-    refresh(label, panel);
+          }*/
+    //To refresh GUI
+    javax.swing.Timer timer = new javax.swing.Timer(800, new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+          if(elapsedTime < totalTime) 
+            label.setText(countDown());
+        }
+      });
+
+    timer.start();
   }
+  /*
+  class labelRefresher implements ActionListener {
+    public void actionPerformed(ActionEvent event) {
+          if(elapsedTime < totalTime) 
+            label.setText(countDown());
+    }
+    }*/
 }

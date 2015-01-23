@@ -22,6 +22,8 @@ public class Main extends JFrame implements ActionListener{
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
+    Timer timer = new Timer(0, 10);
+    startTimer.addActionListener(timer);
 
     panel.add(addTask);
     panel.add(startTimer);
@@ -86,19 +88,18 @@ public class Main extends JFrame implements ActionListener{
     
     }
 
-      class SubmitListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-          //Get Name
-          name = taskName.getText();
-          prioritySelection = (String)(priority.getSelectedItem());
+    class SubmitListener implements ActionListener {
+      public void actionPerformed(ActionEvent event) {
+        //Get Name
+        name = taskName.getText();
+        prioritySelection = (String)(priority.getSelectedItem());
           
-          //Close Window
-          taskFrame.dispose();
-        }
+        //Close Window
+        taskFrame.dispose();
       }
+    }
 
   }
-
 
   public static void main(String[] args) {
     Main GUI = new Main(); //ActionEvent must access an object
