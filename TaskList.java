@@ -13,7 +13,7 @@ public class TaskList{
     public String writeArray(){
         String s = "";
         for(int i = 0; i < taskList.size(); i++){
-            s += taskList.get(i).name + "," + taskList.get(i).priority + "," + taskList.get(i).time  + "," + taskList.get(i).dueDate + "\n";
+            s += taskList.get(i).name + "," + taskList.get(i).priority + "," + taskList.get(i).time  + "," + taskList.get(i).dueDate + ",";
         }
         return s;
     }
