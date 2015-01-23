@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class Timer extends JFrame implements ActionListener {
     
   protected int minutes;
@@ -90,7 +89,7 @@ public class Timer extends JFrame implements ActionListener {
     label.setFont(bigFont);
 
     frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-    frame.setSize(800,600);
+    frame.setSize(1200,400);
     frame.setVisible(true);
 
     /*    while (elapsedTime < totalTime) {
@@ -103,16 +102,19 @@ public class Timer extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent evt) {
           if(elapsedTime < totalTime) 
             label.setText(countDown());
+          else {
+            label.setText("TIME'S\n UP!");
+          }
         }
       });
 
     timer.start();
   }
   /*
-  class labelRefresher implements ActionListener {
+    class labelRefresher implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-          if(elapsedTime < totalTime) 
-            label.setText(countDown());
+    if(elapsedTime < totalTime) 
+    label.setText(countDown());
     }
     }*/
 }
