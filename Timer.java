@@ -11,17 +11,22 @@ public class Timer extends JFrame implements ActionListener {
   protected int totalTime;
   protected int elapsedTime; 
   protected JLabel label;
+  protected boolean pause;
+  protected JFrame frame;
 
   public Timer() {
     minutes = 0;
     seconds = 0;
     totalTime = 0;
+    elapsedTime = 0;
   }
 
   public Timer(int min, int sec) {
     minutes = min;
     seconds = sec;
     totalTime = minutes*60 + seconds; //in seconds
+    elapsedTime = 0;
+    pause = false;
   }
 
   public String secondsToMinutes(int sec) {
@@ -59,30 +64,41 @@ public class Timer extends JFrame implements ActionListener {
     return secondsToMinutes(totalTime - elapsedTime);
   }
 
-  public void refresh(JLabel l, JPanel p) {
-    while (elapsedTime < totalTime) {
-      System.out.println(countDown());
-      l.setText(countDown());
-      p.validate();
-      p.repaint();
+  class Pause implements ActionListener {
+    public void actionPerformed(ActionEvent event) {
+      pause = !pause;
+    }
+  }
+
+  class Close implements ActionListener {
+    public void actionPerformed(ActionEvent event) {
+      frame.dispose();
+      pause = true;
     }
   }
 
   public void actionPerformed(ActionEvent event) {
 
+    pause = false;
+
     Font bigFont = new Font ("Heletica", Font.BOLD, 170);
     Font littleFont = new Font ("Heletica", Font.BOLD, 60);
 
-    JFrame frame = new JFrame();
+    frame = new JFrame();
     JPanel panel = new JPanel();
     panel.setBackground(Color.gray);
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); //Vertical Box Layout
 
     label = new JLabel( secondsToMinutes(totalTime) );
-    JButton button = new JButton( "PAUSE" );
+    JButton button = new JButton( "PAUSE" ); //Pause Button
+    button.addActionListener(new Pause());
+
+    JButton close = new JButton( "CLOSE" ); //Close Window Button
+    close.addActionListener(new Close());
 
     panel.add(label);
     panel.add(button);
+    panel.add(close);
     frame.getContentPane().add(BorderLayout.CENTER, panel);
 
     button.setFont(littleFont);
@@ -98,12 +114,17 @@ public class Timer extends JFrame implements ActionListener {
 
           }*/
     //To refresh GUI
-    javax.swing.Timer timer = new javax.swing.Timer(800, new ActionListener() {
+    javax.swing.Timer timer = new javax.swing.Timer(5, new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-          if(elapsedTime < totalTime) 
-            label.setText(countDown());
+          if(!pause) {
+            if(elapsedTime < totalTime) 
+              label.setText(countDown());
+            else {
+              label.setText("TIME'S\n UP!");
+            }
+          }
           else {
-            label.setText("TIME'S\n UP!");
+            label.setText("PAUSE");
           }
         }
       });

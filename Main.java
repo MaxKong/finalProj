@@ -22,7 +22,7 @@ public class Main extends JFrame implements ActionListener{
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
-    Timer timer = new Timer(0, 10);
+    Timer timer = new Timer(2,0);
     startTimer.addActionListener(timer);
 
     panel.add(addTask);
