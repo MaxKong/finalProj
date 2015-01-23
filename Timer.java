@@ -101,9 +101,12 @@ public class Timer extends JFrame implements ActionListener {
     panel.add(close);
     frame.getContentPane().add(BorderLayout.CENTER, panel);
 
+    //Set Fonts (and Size)
     button.setFont(littleFont);
+    close.setFont(littleFont);
     label.setFont(bigFont);
 
+    //Frame Properties
     frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     frame.setSize(1200,400);
     frame.setVisible(true);
