@@ -1,36 +1,21 @@
 import java.util.*;
 import java.lang.*;
 import java.io.*;
-
 public class FileCreate{
     
-  Formatter f;
-  Scanner s;
-  String readString;
+    Formatter f;
+    Scanner s;
+    String readString;
     
-  //creates textfile
-  public void createFile(){
-    try{
-      f = new Formatter("newFile.csv");
+    //creates textfile
+    public void createFile(){
+        try{
+            f = new Formatter("newFile.csv");
+        }
+        catch(Exception e){
+            System.out.println("Failed to create file");
+        }
     }
-<<<<<<< HEAD
-    catch(Exception e){
-      System.out.println("Failed to create file");
-    }
-  }
-    
-  //writes to file
-  public void writeTo(String s){
-    f.format(s);
-  }
-  //opens file
-  public void openFile(){
-    try{
-      s = new Scanner(new File ("newFile.csv"));
-    }
-    catch(Exception e){
-      System.out.println("error!");
-=======
     
     //writes to file
     public void writeTo(String s){
@@ -58,20 +43,11 @@ public class FileCreate{
     }
     catch (IOException e) {}
     return s;
->>>>>>> 10ebe0af5506eba4deb9532e055e67d9bf977106
     }
-  }
-  //reads File and returns a string of whatever was in the file
-  public String readFile(){
-    while(s.hasNext()){
-      readString = s.next();
+    //closes file
+    public void closeFile(){
+        s.close();
     }
-    return readString;
-  }
-  //closes file
-  public void closeFile(){
-    s.close();
-  }
     
     
     public static void main(String[] args){
@@ -82,5 +58,5 @@ public class FileCreate{
         System.out.println(f.readFile());
         f.closeFile();
         
-  }
+    }
 }
