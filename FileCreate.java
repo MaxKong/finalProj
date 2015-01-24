@@ -74,13 +74,6 @@ public class FileCreate{
   }
     
     
-<<<<<<< HEAD
-  public static void main(String[] args){
-    FileCreate f = new FileCreate();
-    f.openFile();
-    f.readFile();
-    f.closeFile();
-=======
     public static void main(String[] args){
 	FileCreate f = new FileCreate();
         f.createFile();
@@ -88,7 +81,6 @@ public class FileCreate{
 	f.writeTo("10,10,Task,12/12/12");
         System.out.println(f.readFile());
         f.closeFile();
->>>>>>> 10ebe0af5506eba4deb9532e055e67d9bf977106
         
   }
 }
