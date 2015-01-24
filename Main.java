@@ -6,15 +6,15 @@ import java.awt.event.ActionListener;
 
 
 /*CURRENT PROBLEMS
-Timer parameters into ints ==> Solved (most likely)
-Refresh method not displaying Buttons/Panels onto Frames (Either one of those)
-Panel is not visible (that's most likely the problem) on the frame
+  Timer parameters into ints ==> Solved (most likely)
+  Refresh method not displaying Buttons/Panels onto Frames (Either one of those)
+  Panel is not visible (that's most likely the problem) on the frame
 
-TO-DO 
-- Make Buttons Appear on Left
-- Make those Buttons respond by using their individual timer options, etc.
-- Implement Timer Conversion (the mathy stuff) solution to all Timers for each Task (after 
-Left-Hand side buttons are properly made */
+  TO-DO 
+  - Make Buttons Appear on Left
+  - Make those Buttons respond by using their individual timer options, etc.
+  - Implement Timer Conversion (the mathy stuff) solution to all Timers for each Task (after 
+  Left-Hand side buttons are properly made */
 public class Main extends JFrame implements ActionListener{
   Font littleFont = new Font ("Heletica", Font.BOLD, 40);
   TaskList t;
@@ -23,6 +23,10 @@ public class Main extends JFrame implements ActionListener{
   JFrame frame;
   JPanel panel;
   int timedigit;
+  int index = 0;
+  ArrayList<JButton> listOfTaskButtons = new ArrayList<JButton>();
+  JButton startTimer;
+  Timer timer;
 
   public Main() {
     FileCreate f = new FileCreate();
@@ -46,12 +50,12 @@ public class Main extends JFrame implements ActionListener{
     // System.out.println("we made the panel");
 
     //Start Timer
-    JButton startTimer = new JButton("Start Current Task");
+    startTimer = new JButton("Start Current Task");
     /*    int s = timedigit%100;
           int m = ((timedigit-s)/100)%100;
           int h = ((timedigit-s-(m*100))/100)%100;
     */ 
-    Timer timer = new Timer( ((selected.time)/10000), (((selected.time)%10000)/100), ((selected.time)%100));
+    //    timer = new Timer( ((selected.time)/10000), (((selected.time)%10000)/100), ((selected.time)%100));
 
     startTimer.addActionListener(timer);
     startTimer.setFont(littleFont);
@@ -71,6 +75,10 @@ public class Main extends JFrame implements ActionListener{
     //t.addTask(new Task("1", "111", "Math", "111"));
     //    JButton leftButton = new JButton((t.taskList.get(0).name + t.taskList.get(0).dueDate));
 
+    JPanel leftPanel = new JPanel();
+    //JLabel testLabel = new JLabel("Testing!");
+    //System.out.println(t.taskList.size());
+
     panel.add(addTask);
     //    System.out.println("added Task");
     panel.add(startTimer);
@@ -81,35 +89,16 @@ public class Main extends JFrame implements ActionListener{
   }
 
   public void refresh() {
-    
-    //    System.out.println("rgeg");
 
-    JPanel leftPanel = new JPanel();
-    JLabel testLabel = new JLabel("Testing!");
     leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));  //Vertical Panel
-    //System.out.println(t.taskList.size());
 
-    leftPanel.add(testLabel);
+    panel.setBorder(BorderFactory.createLineBorder(Color.red));
+    leftPanel.setBorder(BorderFactory.createLineBorder(Color.blue));    //MAKES SECOND PANEL APPEAR!!
+
+    leftPanel.revalidate();
+    leftPanel.repaint();
     frame.getContentPane().add(BorderLayout.WEST, leftPanel);
-    JButton leftButton;
-   
-    for(int i = 0; i < t.taskList.size(); i++) {
-      System.out.println((t.taskList.get(0).name));
-      leftButton = new JButton((t.taskList.get(0).name));
-      leftButton.setFont(littleFont);
-      // panel.add(leftButton);
-      frame.getContentPane().add(leftButton);
-    }
-
-    //The JPanel is not on the JFrame for some reason
-    //JButton might not be attached to JPanel
-
-    //    frame.add(panel, BorderLayout.WEST);
-    //    frame.getContentPane().add(BorderLayout.WEST, panel);
-    //    frame.getContentPane().add(BorderLayout.WEST, leftPanel);
-
-    //System.out.println("Runs for loop");
-
+    
   }
   
   public void actionPerformed(ActionEvent event) {
@@ -120,6 +109,7 @@ public class Main extends JFrame implements ActionListener{
   class RemoveTask implements ActionListener {
     public void actionPerformed(ActionEvent event) {
       t.remTask(selected);
+      listOfTaskButtons.remove(selected);
       refresh();
       //      System.out.println(tasks.get(0));      
     }
@@ -278,43 +268,66 @@ public class Main extends JFrame implements ActionListener{
       taskFrame.getContentPane().add(taskPanel);
     
     }
+  
 
     class SubmitListener implements ActionListener {
       public void actionPerformed(ActionEvent event) {
         //Get Name
         name = taskName.getText();
         prioritySelection = (String)(priority.getSelectedItem());
-
+      
         //Get Due Date
         dueYear = (String)(dueDateYear.getSelectedItem());
         dueMonth = (String)(dueDateMonth.getSelectedItem());
         dueDay = (String)(dueDateDay.getSelectedItem());
-
+      
         timerHours = (String)(timerSelectionHours.getSelectedItem());
         timerMinutes = (String)(timerSelectionMinutes.getSelectedItem());
         timerSeconds = (String)(timerSelectionSeconds.getSelectedItem());
-
+      
         if(Integer.parseInt(timerHours) < 10)
           timerHours = "0" + timerHours;
         if(Integer.parseInt(timerMinutes) < 10) 
           timerMinutes = "0" + timerMinutes;
         if(Integer.parseInt(timerSeconds) < 10)
           timerSeconds = "0" + timerSeconds;
-
+      
         selected = new Task(prioritySelection, (timerHours + timerMinutes + timerSeconds), name, (dueYear + dueMonth + dueDay)); //THE TIME IS A NUMBER (INTEGER)
+        //End Configure individual Task Time
+      
+        //Renew the Frame GUI
         t.addTask(selected);
-
+        listOfTaskButtons.add( new JButton(selected.name ));        
+        leftPanel.add(listOfTaskButtons.get(index));
+        listOfTaskButtons.get(index).addActionListener(new ClickResponse(index));
+        index++;
+        
         refresh();
         //Close Window
         taskFrame.dispose();
       }
     }
-
   }
 
+  class ClickResponse implements ActionListener {
+    int ind;
+    ClickResponse(int indexOfButton) {
+      ind = indexOfButton;
+    }
+    
+    public void actionPerformed(ActionEvent event) {
+      selected = t.taskList.get(ind);
+      timer = new Timer( ((selected.time)/10000), (((selected.time)%10000)/100), ((selected.time)%100));
+      //Remove previous Listeners
+      for(int i = 0; i < startTimer.getActionListeners().length; i++) {
+        startTimer.removeActionListener(startTimer.getActionListeners()[i]);
+      }
+      startTimer.addActionListener(timer);
+    }
+  }
+  
   public static void main(String[] args) {
     Main GUI = new Main(); //ActionEvent must access an object
-
- 
   }
 }
+
