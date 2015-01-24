@@ -21,5 +21,6 @@ public class Task{
     Task t = new Task(10, 40, "Math", "1/2/15");
     System.out.println(t);
     System.out.println(t.name);
+    System.out.println(t.dueDate);
   }
 }
