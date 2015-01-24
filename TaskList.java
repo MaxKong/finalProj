@@ -13,10 +13,7 @@ public class TaskList{
     return s;
   }
     
-  public void clearArray(){
-        
-  }
-    
+
   public String writeArray(){
     String s = "";
     for(int i = 0; i < taskList.size(); i++){
@@ -27,11 +24,13 @@ public class TaskList{
 public void checkDate(Task t){
 	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
-        if ((t.dueDate).equals(date)){
-            this.remTask(t);
-            System.out.println("You ran out of time to complete " + t.name);
+        for (int i = 0; i < taskList.size(); i++){
+            if ((t.dueDate).equals(date)){
+                this.remTask(t);
+                System.out.println("You ran out of time to complete " + t.name);
+            }
         }
-}
+	}
   public String addTask(Task t){//Adds a task to the arrayList that holds all tasks
     int i = 0;
     while(i < taskList.size() && t.priority < taskList.get(i).priority){
