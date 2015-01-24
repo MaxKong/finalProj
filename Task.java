@@ -1,8 +1,8 @@
 public class Task{
-  protected int priority = 0;
-  protected int time = 0;
-  protected String name = "";
-  protected String dueDate  = ""; //date needs to be in format: 2014/08/06 16:06:54
+  public int priority = 0;
+  public int time = 0;
+  public String name = "";
+  public String dueDate  = ""; //date needs to be in format: 2014/08/06 16:06:54
     
   public Task(String a, String b, String c, String d){
     priority = Integer.parseInt(a);
@@ -18,7 +18,7 @@ public class Task{
   }
     
   /*
-  public static void main(String[] args){
+    public static void main(String[] args){
     Task t = new Task(10, 40, "Math", "1/2/15");
     System.out.println(t);
     System.out.println(t.name);

@@ -4,10 +4,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/*CURRENT PROBLEMS
+Timer parameters into ints ==> Solved (most likely)
+Refresh method not displaying Buttons/Panels onto Frames (Either one of those)
+Panel is not visible (that's most likely the problem) on the frame
+
+TO-DO 
+- Make Buttons Appear on Left
+- Make those Buttons respond by using their individual timer options, etc.
+- Implement Timer Conversion (the mathy stuff) solution to all Timers for each Task (after 
+Left-Hand side buttons are properly made */
 public class Main extends JFrame implements ActionListener{
   Font littleFont = new Font ("Heletica", Font.BOLD, 40);
   TaskList t;
-  Task selected;
+  Task selected = new Task("1", "071207", "Task1", "121212"); //Pull from user input
   JPanel leftPanel = new JPanel();
   JFrame frame;
   JPanel panel;
@@ -36,13 +47,11 @@ public class Main extends JFrame implements ActionListener{
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
-    int s = timedigit%100;
-    int m = ((timedigit-s)/100)%100;
-    int h = ((timedigit-s-(m*100))/100)%100;
-    Timer timer = new Timer(s, m, h);
-
-    System.out.println(s);
-    
+    /*    int s = timedigit%100;
+          int m = ((timedigit-s)/100)%100;
+          int h = ((timedigit-s-(m*100))/100)%100;
+    */ 
+    Timer timer = new Timer( ((selected.time)/10000), (((selected.time)%10000)/100), ((selected.time)%100));
 
     startTimer.addActionListener(timer);
     startTimer.setFont(littleFont);
@@ -76,17 +85,27 @@ public class Main extends JFrame implements ActionListener{
     //    System.out.println("rgeg");
 
     JPanel leftPanel = new JPanel();
+    JLabel testLabel = new JLabel("Testing!");
     leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));  //Vertical Panel
     //System.out.println(t.taskList.size());
+
+    leftPanel.add(testLabel);
+    frame.getContentPane().add(BorderLayout.WEST, leftPanel);
     JButton leftButton;
+   
     for(int i = 0; i < t.taskList.size(); i++) {
       System.out.println((t.taskList.get(0).name));
       leftButton = new JButton((t.taskList.get(0).name));
       leftButton.setFont(littleFont);
-      panel.add(leftButton);
-     }
-    
-    frame.getContentPane().add(BorderLayout.EAST, panel);
+      // panel.add(leftButton);
+      frame.getContentPane().add(leftButton);
+    }
+
+    //The JPanel is not on the JFrame for some reason
+    //JButton might not be attached to JPanel
+
+    //    frame.add(panel, BorderLayout.WEST);
+    //    frame.getContentPane().add(BorderLayout.WEST, panel);
     //    frame.getContentPane().add(BorderLayout.WEST, leftPanel);
 
     //System.out.println("Runs for loop");
@@ -215,16 +234,16 @@ public class Main extends JFrame implements ActionListener{
       timerSelectionSeconds.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
       timedigit = 0;
       for(Integer i = 0; i < 24; i++){
-        //timerSelectionHours.addItem(i.toString());
-        timedigit=timedigit+(i*10000);
+        timerSelectionHours.addItem(i.toString());
+        //timedigit=timedigit+(i*10000);
       }
       for(Integer j = 0; j < 61; j++) {
-        //timerSelectionMinutes.addItem(j.toString());
-        timedigit=timedigit+(j*100);
+        timerSelectionMinutes.addItem(j.toString());
+        // timedigit=timedigit+(j*100);
       }
       for(Integer k = 0; k < 61; k++){
-        timedigit=timedigit+k;
-        //timerSelectionSeconds.addItem(k.toString());
+        //        timedigit=timedigit+k;
+        timerSelectionSeconds.addItem(k.toString());
       }
       //Fifth Line (Submit)
       
@@ -275,7 +294,15 @@ public class Main extends JFrame implements ActionListener{
         timerMinutes = (String)(timerSelectionMinutes.getSelectedItem());
         timerSeconds = (String)(timerSelectionSeconds.getSelectedItem());
 
-        t.addTask(new Task(prioritySelection, (timerHours + timerMinutes + timerSeconds), name, (dueYear + dueMonth + dueDay)));
+        if(Integer.parseInt(timerHours) < 10)
+          timerHours = "0" + timerHours;
+        if(Integer.parseInt(timerMinutes) < 10) 
+          timerMinutes = "0" + timerMinutes;
+        if(Integer.parseInt(timerSeconds) < 10)
+          timerSeconds = "0" + timerSeconds;
+
+        selected = new Task(prioritySelection, (timerHours + timerMinutes + timerSeconds), name, (dueYear + dueMonth + dueDay)); //THE TIME IS A NUMBER (INTEGER)
+        t.addTask(selected);
 
         refresh();
         //Close Window

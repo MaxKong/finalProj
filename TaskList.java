@@ -59,7 +59,7 @@ public class TaskList{
      }*/
 
   /*
-  public static void main(String[] args){
+    public static void main(String[] args){
     TaskList m = new TaskList();
     Task t = new Task(10, 40, "Task 1", "1/2/3"); 
     Task t1 = new Task(7, 40, "Task 2", "1/2/3"); 
@@ -67,9 +67,9 @@ public class TaskList{
     Task t3 = new Task(1, 40, "Task 4", "1/2/3"); 
         
     m.addTask(t);
-      m.addTask(t1);
-      m.addTask(t2);
-      m.addTask(t3);
+    m.addTask(t1);
+    m.addTask(t2);
+    m.addTask(t3);
     
     //System.out.println(m.writeArray());
     System.out.println("Below");
