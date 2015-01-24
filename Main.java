@@ -10,10 +10,6 @@ public class Main extends JFrame implements ActionListener{
   Task t;
   Task p;
   public Main() {
-    t = new Task(10, 40, "Math", "1/2/15");
-    tasks.add(t);
-    p = new Task(10, 50, "English", "1/5/17");
-    tasks.add(p);
 
     //Main Frame
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -63,181 +59,181 @@ public class Main extends JFrame implements ActionListener{
 
   class RemoveTask implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-            tasks.remove(t);
-            System.out.println(tasks.get(0));      
+      tasks.remove(t);
+      System.out.println(tasks.get(0));      
     }
   }
 
-      class NewTask implements ActionListener {
-        //So Submit can detect amd save/close
-        JFrame taskFrame; 
-        JTextField taskName; 
-        JComboBox<String> priority;
-        //Due Date Selection
-        JComboBox<String> dueDateYear;
-        JComboBox<String> dueDateMonth;
-        JComboBox<String> dueDateDay;
+  class NewTask implements ActionListener {
+    //So Submit can detect amd save/close
+    JFrame taskFrame; 
+    JTextField taskName; 
+    JComboBox<String> priority;
+    //Due Date Selection
+    JComboBox<String> dueDateYear;
+    JComboBox<String> dueDateMonth;
+    JComboBox<String> dueDateDay;
 
-        String dueYear;
-        String dueMonth;
-        String dueDay;
+    String dueYear;
+    String dueMonth;
+    String dueDay;
 
-        //Timer Selection
-        JComboBox<String> timerSelectionHours;
-        JComboBox<String> timerSelectionMinutes;
-        JComboBox<String> timerSelectionSeconds;
+    //Timer Selection
+    JComboBox<String> timerSelectionHours;
+    JComboBox<String> timerSelectionMinutes;
+    JComboBox<String> timerSelectionSeconds;
 
-        String timerHours;
-        String timerMinutes;
-        String timerSeconds;
+    String timerHours;
+    String timerMinutes;
+    String timerSeconds;
 
-        String name;
-        String prioritySelection;
+    String name;
+    String prioritySelection;
 
-        public void actionPerformed(ActionEvent event) { //New Task Button
-          //Frame
-          taskFrame = new JFrame();
-          taskFrame.setSize(1000, 600);
-          taskFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-          taskFrame.setVisible(true);
+    public void actionPerformed(ActionEvent event) { //New Task Button
+      //Frame
+      taskFrame = new JFrame();
+      taskFrame.setSize(1000, 600);
+      taskFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+      taskFrame.setVisible(true);
       
-          //Overarching Panel
-          JPanel taskPanel = new JPanel();
-          taskPanel.setBackground(Color.gray);
-          taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));  //Vertical Panel
+      //Overarching Panel
+      JPanel taskPanel = new JPanel();
+      taskPanel.setBackground(Color.gray);
+      taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));  //Vertical Panel
       
-          //Task Details ------------------------------------------
+      //Task Details ------------------------------------------
 
-          //First Line
+      //First Line
 
-          //TextBox
-          JPanel firstLine = new JPanel();
-          JLabel metaName = new JLabel("Name: ");
-          taskName = new JTextField(20); 
-          //One line Size
-          taskName.setMaximumSize(new Dimension(Integer.MAX_VALUE, taskName.getMinimumSize().height));
-          metaName.setFont(littleFont);
-          taskName.setFont(littleFont);
+      //TextBox
+      JPanel firstLine = new JPanel();
+      JLabel metaName = new JLabel("Name: ");
+      taskName = new JTextField(20); 
+      //One line Size
+      taskName.setMaximumSize(new Dimension(Integer.MAX_VALUE, taskName.getMinimumSize().height));
+      metaName.setFont(littleFont);
+      taskName.setFont(littleFont);
 
-          //Second Line
+      //Second Line
 
-          //Drop Down Menu
-          JPanel secondLine = new JPanel();
-          JLabel importance = new JLabel("Priority Level: ");
-          importance.setFont(littleFont);
-          priority = new JComboBox<String>(); //Drop Down Menu
-          //One line Size
-          priority.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
-          priority.setFont(littleFont);
-          priority.addItem("1");
-          priority.addItem("2");
-          priority.addItem("3");
-          priority.addItem("4");
-          priority.addItem("5");
+      //Drop Down Menu
+      JPanel secondLine = new JPanel();
+      JLabel importance = new JLabel("Priority Level: ");
+      importance.setFont(littleFont);
+      priority = new JComboBox<String>(); //Drop Down Menu
+      //One line Size
+      priority.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      priority.setFont(littleFont);
+      priority.addItem("1");
+      priority.addItem("2");
+      priority.addItem("3");
+      priority.addItem("4");
+      priority.addItem("5");
       
-          //Third Line (Due Date)
-          JPanel thirdLine = new JPanel();
-          JLabel due = new JLabel("Due Date (YY/MM/DD): ");
-          due.setFont(littleFont);
+      //Third Line (Due Date)
+      JPanel thirdLine = new JPanel();
+      JLabel due = new JLabel("Due Date (YY/MM/DD): ");
+      due.setFont(littleFont);
 
-          dueDateYear = new JComboBox<String>();
-          dueDateMonth = new JComboBox<String>();
-          dueDateDay = new JComboBox<String>();
+      dueDateYear = new JComboBox<String>();
+      dueDateMonth = new JComboBox<String>();
+      dueDateDay = new JComboBox<String>();
       
-          dueDateYear.setFont(littleFont);
-          dueDateMonth.setFont(littleFont);
-          dueDateDay.setFont(littleFont);
+      dueDateYear.setFont(littleFont);
+      dueDateMonth.setFont(littleFont);
+      dueDateDay.setFont(littleFont);
 
-          dueDateYear.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
-          dueDateMonth.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
-          dueDateDay.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      dueDateYear.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      dueDateMonth.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      dueDateDay.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
 
-          for(Integer i = 1; i < 100; i++)
-            dueDateYear.addItem(i.toString());
-          for(Integer j = 1; j < 13; j++) 
-            dueDateMonth.addItem(j.toString());
-          for(Integer k = 1; k < 32; k++)
-            dueDateDay.addItem(k.toString());
+      for(Integer i = 1; i < 100; i++)
+        dueDateYear.addItem(i.toString());
+      for(Integer j = 1; j < 13; j++) 
+        dueDateMonth.addItem(j.toString());
+      for(Integer k = 1; k < 32; k++)
+        dueDateDay.addItem(k.toString());
 
-          //Fourth Line (Timer Setting)
-          JPanel fourthLine = new JPanel();
-          JLabel timeSetting = new JLabel("Timer (HH/MM/SS): ");
-          timeSetting.setFont(littleFont);
+      //Fourth Line (Timer Setting)
+      JPanel fourthLine = new JPanel();
+      JLabel timeSetting = new JLabel("Timer (HH/MM/SS): ");
+      timeSetting.setFont(littleFont);
 
-          timerSelectionHours = new JComboBox<String>();
-          timerSelectionMinutes = new JComboBox<String>();
-          timerSelectionSeconds = new JComboBox<String>();
+      timerSelectionHours = new JComboBox<String>();
+      timerSelectionMinutes = new JComboBox<String>();
+      timerSelectionSeconds = new JComboBox<String>();
       
-          timerSelectionHours.setFont(littleFont);
-          timerSelectionMinutes.setFont(littleFont);
-          timerSelectionSeconds.setFont(littleFont);
+      timerSelectionHours.setFont(littleFont);
+      timerSelectionMinutes.setFont(littleFont);
+      timerSelectionSeconds.setFont(littleFont);
 
-          timerSelectionHours.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
-          timerSelectionMinutes.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
-          timerSelectionSeconds.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      timerSelectionHours.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      timerSelectionMinutes.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      timerSelectionSeconds.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
 
-          for(Integer i = 0; i < 24; i++)
-            timerSelectionHours.addItem(i.toString());
-          for(Integer j = 0; j < 61; j++) 
-            timerSelectionMinutes.addItem(j.toString());
-          for(Integer k = 0; k < 61; k++)
-            timerSelectionSeconds.addItem(k.toString());
+      for(Integer i = 0; i < 24; i++)
+        timerSelectionHours.addItem(i.toString());
+      for(Integer j = 0; j < 61; j++) 
+        timerSelectionMinutes.addItem(j.toString());
+      for(Integer k = 0; k < 61; k++)
+        timerSelectionSeconds.addItem(k.toString());
 
-          //Fifth Line (Submit)
+      //Fifth Line (Submit)
       
-          JPanel fifthLine = new JPanel();
-          JButton submit = new JButton("Submit"); //Submit button, close window, MUST ADD SAVE INFO
-          submit.addActionListener(new SubmitListener());
-          submit.setFont(littleFont);
+      JPanel fifthLine = new JPanel();
+      JButton submit = new JButton("Submit"); //Submit button, close window, MUST ADD SAVE INFO
+      submit.addActionListener(new SubmitListener());
+      submit.setFont(littleFont);
 
-          //Add to Panel
-          firstLine.add(metaName);
-          firstLine.add(taskName);
-          secondLine.add(importance);
-          secondLine.add(priority);
-          thirdLine.add(due);
-          thirdLine.add(dueDateYear);
-          thirdLine.add(dueDateMonth);
-          thirdLine.add(dueDateDay);
-          fourthLine.add(timeSetting);
-          fourthLine.add(timerSelectionHours);
-          fourthLine.add(timerSelectionMinutes);
-          fourthLine.add(timerSelectionSeconds);
-          fifthLine.add(submit);
+      //Add to Panel
+      firstLine.add(metaName);
+      firstLine.add(taskName);
+      secondLine.add(importance);
+      secondLine.add(priority);
+      thirdLine.add(due);
+      thirdLine.add(dueDateYear);
+      thirdLine.add(dueDateMonth);
+      thirdLine.add(dueDateDay);
+      fourthLine.add(timeSetting);
+      fourthLine.add(timerSelectionHours);
+      fourthLine.add(timerSelectionMinutes);
+      fourthLine.add(timerSelectionSeconds);
+      fifthLine.add(submit);
       
-          //Add to Overarching Panel
-          taskPanel.add(firstLine);
-          taskPanel.add(secondLine);
-          taskPanel.add(thirdLine);
-          taskPanel.add(fourthLine);
-          taskPanel.add(fifthLine);
+      //Add to Overarching Panel
+      taskPanel.add(firstLine);
+      taskPanel.add(secondLine);
+      taskPanel.add(thirdLine);
+      taskPanel.add(fourthLine);
+      taskPanel.add(fifthLine);
 
-          //Add Panel and Fit Window to Content
-          taskFrame.getContentPane().add(taskPanel);
+      //Add Panel and Fit Window to Content
+      taskFrame.getContentPane().add(taskPanel);
     
-        }
+    }
 
-        class SubmitListener implements ActionListener {
-          public void actionPerformed(ActionEvent event) {
-            //Get Name
-            name = taskName.getText();
-            prioritySelection = (String)(priority.getSelectedItem());
+    class SubmitListener implements ActionListener {
+      public void actionPerformed(ActionEvent event) {
+        //Get Name
+        name = taskName.getText();
+        prioritySelection = (String)(priority.getSelectedItem());
 
-            //Get Due Date
-            dueYear = (String)(dueDateYear.getSelectedItem());
-            dueMonth = (String)(dueDateMonth.getSelectedItem());
-            dueDay = (String)(dueDateDay.getSelectedItem());
+        //Get Due Date
+        dueYear = (String)(dueDateYear.getSelectedItem());
+        dueMonth = (String)(dueDateMonth.getSelectedItem());
+        dueDay = (String)(dueDateDay.getSelectedItem());
 
-            //Close Window
-            taskFrame.dispose();
-          }
-        }
-
+        //Close Window
+        taskFrame.dispose();
       }
+    }
 
-      public static void main(String[] args) {
-      Main GUI = new Main(); //ActionEvent must access an object
+  }
+
+  public static void main(String[] args) {
+    Main GUI = new Main(); //ActionEvent must access an object
 
  
-    }
   }
+}
