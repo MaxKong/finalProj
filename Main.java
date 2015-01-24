@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main extends JFrame implements ActionListener{
-  Font littleFont = new Font ("Heletica", Font.BOLD, 60);
+  Font littleFont = new Font ("Heletica", Font.BOLD, 40);
   
   public Main() {
     //Main Frame
@@ -13,34 +13,34 @@ public class Main extends JFrame implements ActionListener{
 
     JFrame frame = new JFrame();
     frame.setTitle("Time Planner");
-    System.out.println("We just made the frame");
+    // System.out.println("We just made the frame");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(screenSize.width / 2, screenSize.height / 2);
     frame.setVisible(true);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));  //Vertical Panel
-    System.out.println("we made the panel");
+    // System.out.println("we made the panel");
 
     //New Task Button
     JButton addTask = new JButton("New Task");
     addTask.addActionListener(new NewTask()); //Listen to click
     addTask.setFont(littleFont);
-    System.out.println("New Task");
+    //    System.out.println("New Task");
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
-    Timer timer = new Timer(2,0);
+    Timer timer = new Timer(1, 0, 0);
     startTimer.addActionListener(timer);
     startTimer.setFont(littleFont);
-    System.out.println("Start Timer");
+    // System.out.println("Start Timer");
 
     panel.add(addTask);
-    System.out.println("added Task");
+    //    System.out.println("added Task");
     panel.add(startTimer);
-    System.out.println("added Start Timer");
+    // System.out.println("added Start Timer");
     frame.getContentPane().add(BorderLayout.EAST, panel);
-    System.out.println("Get Content Pane thing");
+    //   System.out.println("Get Content Pane thing");
   }
   
   public void actionPerformed(ActionEvent event) { //Possibly for Displaying Added Tasks (Max's Text File)
@@ -52,13 +52,31 @@ public class Main extends JFrame implements ActionListener{
     JFrame taskFrame; 
     JTextField taskName; 
     JComboBox<String> priority;
+    //Due Date Selection
+    JComboBox<String> dueDateYear;
+    JComboBox<String> dueDateMonth;
+    JComboBox<String> dueDateDay;
+
+    String dueYear;
+    String dueMonth;
+    String dueDay;
+
+    //Timer Selection
+    JComboBox<String> timerSelectionHours;
+    JComboBox<String> timerSelectionMinutes;
+    JComboBox<String> timerSelectionSeconds;
+
+    String timerHours;
+    String timerMinutes;
+    String timerSeconds;
 
     String name;
     String prioritySelection;
+
     public void actionPerformed(ActionEvent event) { //New Task Button
       //Frame
       taskFrame = new JFrame();
-      taskFrame.setSize(800, 600);
+      taskFrame.setSize(1000, 600);
       taskFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
       taskFrame.setVisible(true);
       
@@ -74,31 +92,79 @@ public class Main extends JFrame implements ActionListener{
       //TextBox
       JPanel firstLine = new JPanel();
       JLabel metaName = new JLabel("Name: ");
-      metaName.setFont(littleFont);
       taskName = new JTextField(20); 
       //One line Size
       taskName.setMaximumSize(new Dimension(Integer.MAX_VALUE, taskName.getMinimumSize().height));
-      
+      metaName.setFont(littleFont);
+      taskName.setFont(littleFont);
 
       //Second Line
 
       //Drop Down Menu
       JPanel secondLine = new JPanel();
-      JLabel importance = new JLabel("Priority Level");
+      JLabel importance = new JLabel("Priority Level: ");
       importance.setFont(littleFont);
       priority = new JComboBox<String>(); //Drop Down Menu
       //One line Size
       priority.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      priority.setFont(littleFont);
       priority.addItem("1");
       priority.addItem("2");
       priority.addItem("3");
       priority.addItem("4");
       priority.addItem("5");
       
-
-      //Third Line
-      
+      //Third Line (Due Date)
       JPanel thirdLine = new JPanel();
+      JLabel due = new JLabel("Due Date (YY/MM/DD): ");
+      due.setFont(littleFont);
+
+      dueDateYear = new JComboBox<String>();
+      dueDateMonth = new JComboBox<String>();
+      dueDateDay = new JComboBox<String>();
+      
+      dueDateYear.setFont(littleFont);
+      dueDateMonth.setFont(littleFont);
+      dueDateDay.setFont(littleFont);
+
+      dueDateYear.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      dueDateMonth.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      dueDateDay.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+
+      for(Integer i = 0; i < 100; i++)
+        dueDateYear.addItem(i.toString());
+      for(Integer j = 0; j < 13; j++) 
+        dueDateMonth.addItem(j.toString());
+      for(Integer k = 0; k < 32; k++)
+        dueDateDay.addItem(k.toString());
+
+      //Fourth Line (Timer Setting)
+      JPanel fourthLine = new JPanel();
+      JLabel timeSetting = new JLabel("Timer (HH/MM/SS): ");
+      timeSetting.setFont(littleFont);
+
+      timerSelectionHours = new JComboBox<String>();
+      timerSelectionMinutes = new JComboBox<String>();
+      timerSelectionSeconds = new JComboBox<String>();
+      
+      timerSelectionHours.setFont(littleFont);
+      timerSelectionMinutes.setFont(littleFont);
+      timerSelectionSeconds.setFont(littleFont);
+
+      timerSelectionHours.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      timerSelectionMinutes.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+      timerSelectionSeconds.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
+
+      for(Integer i = 0; i < 24; i++)
+        timerSelectionHours.addItem(i.toString());
+      for(Integer j = 0; j < 61; j++) 
+        timerSelectionMinutes.addItem(j.toString());
+      for(Integer k = 0; k < 61; k++)
+        timerSelectionSeconds.addItem(k.toString());
+
+      //Fifth Line (Submit)
+      
+      JPanel fifthLine = new JPanel();
       JButton submit = new JButton("Submit"); //Submit button, close window, MUST ADD SAVE INFO
       submit.addActionListener(new SubmitListener());
       submit.setFont(littleFont);
@@ -108,12 +174,22 @@ public class Main extends JFrame implements ActionListener{
       firstLine.add(taskName);
       secondLine.add(importance);
       secondLine.add(priority);
-      thirdLine.add(submit);
+      thirdLine.add(due);
+      thirdLine.add(dueDateYear);
+      thirdLine.add(dueDateMonth);
+      thirdLine.add(dueDateDay);
+      fourthLine.add(timeSetting);
+      fourthLine.add(timerSelectionHours);
+      fourthLine.add(timerSelectionMinutes);
+      fourthLine.add(timerSelectionSeconds);
+      fifthLine.add(submit);
       
       //Add to Overarching Panel
       taskPanel.add(firstLine);
       taskPanel.add(secondLine);
       taskPanel.add(thirdLine);
+      taskPanel.add(fourthLine);
+      taskPanel.add(fifthLine);
 
       //Add Panel and Fit Window to Content
       taskFrame.getContentPane().add(taskPanel);
@@ -125,7 +201,12 @@ public class Main extends JFrame implements ActionListener{
         //Get Name
         name = taskName.getText();
         prioritySelection = (String)(priority.getSelectedItem());
-          
+
+        //Get Due Date
+        dueYear = (String)(dueDateYear.getSelectedItem());
+        dueMonth = (String)(dueDateMonth.getSelectedItem());
+        dueDay = (String)(dueDateDay.getSelectedItem());
+
         //Close Window
         taskFrame.dispose();
       }
