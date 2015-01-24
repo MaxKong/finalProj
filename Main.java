@@ -6,28 +6,44 @@ import java.awt.event.ActionListener;
 
 public class Main extends JFrame implements ActionListener{
   Font littleFont = new Font ("Heletica", Font.BOLD, 40);
-  ArrayList tasks = new ArrayList();
-  Task t;
-  Task p;
+  TaskList t;
+  Task selected;
+  JPanel leftPanel = new JPanel();
+  JFrame frame;
+  JPanel panel;
+  int timedigit;
+
   public Main() {
+    FileCreate f = new FileCreate();
+    f.openFile();
+
+    t = new TaskList();
+    t.createArray(f.readFile());
 
     //Main Frame
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    JFrame frame = new JFrame();
+    frame = new JFrame();
     frame.setTitle("Time Planner");
     // System.out.println("We just made the frame");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(screenSize.width / 2, screenSize.height / 2);
     frame.setVisible(true);
 
-    JPanel panel = new JPanel();
+    panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));  //Vertical Panel
     // System.out.println("we made the panel");
 
     //Start Timer
     JButton startTimer = new JButton("Start Current Task");
-    Timer timer = new Timer(1, 0, 0);
+    int s = timedigit%100;
+    int m = ((timedigit-s)/100)%100;
+    int h = ((timedigit-s-(m*100))/100)%100;
+    Timer timer = new Timer(s, m, h);
+
+    System.out.println(s);
+    
+
     startTimer.addActionListener(timer);
     startTimer.setFont(littleFont);
     // System.out.println("Start Timer");
@@ -43,6 +59,9 @@ public class Main extends JFrame implements ActionListener{
     removeTask.addActionListener(new RemoveTask());
     removeTask.setFont(littleFont);
 
+    //t.addTask(new Task("1", "111", "Math", "111"));
+    //    JButton leftButton = new JButton((t.taskList.get(0).name + t.taskList.get(0).dueDate));
+
     panel.add(addTask);
     //    System.out.println("added Task");
     panel.add(startTimer);
@@ -50,6 +69,28 @@ public class Main extends JFrame implements ActionListener{
     panel.add(removeTask);
     frame.getContentPane().add(BorderLayout.EAST, panel);
     //   System.out.println("Get Content Pane thing");
+  }
+
+  public void refresh() {
+    
+    //    System.out.println("rgeg");
+
+    JPanel leftPanel = new JPanel();
+    leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));  //Vertical Panel
+    //System.out.println(t.taskList.size());
+    JButton leftButton;
+    for(int i = 0; i < t.taskList.size(); i++) {
+      System.out.println((t.taskList.get(0).name));
+      leftButton = new JButton((t.taskList.get(0).name));
+      leftButton.setFont(littleFont);
+      panel.add(leftButton);
+     }
+    
+    frame.getContentPane().add(BorderLayout.EAST, panel);
+    //    frame.getContentPane().add(BorderLayout.WEST, leftPanel);
+
+    //System.out.println("Runs for loop");
+
   }
   
   public void actionPerformed(ActionEvent event) {
@@ -59,8 +100,9 @@ public class Main extends JFrame implements ActionListener{
 
   class RemoveTask implements ActionListener {
     public void actionPerformed(ActionEvent event) {
-      tasks.remove(t);
-      System.out.println(tasks.get(0));      
+      t.remTask(selected);
+      refresh();
+      //      System.out.println(tasks.get(0));      
     }
   }
 
@@ -171,14 +213,19 @@ public class Main extends JFrame implements ActionListener{
       timerSelectionHours.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
       timerSelectionMinutes.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
       timerSelectionSeconds.setMaximumSize(new Dimension(Integer.MAX_VALUE, priority.getMinimumSize().height));
-
-      for(Integer i = 0; i < 24; i++)
-        timerSelectionHours.addItem(i.toString());
-      for(Integer j = 0; j < 61; j++) 
-        timerSelectionMinutes.addItem(j.toString());
-      for(Integer k = 0; k < 61; k++)
-        timerSelectionSeconds.addItem(k.toString());
-
+      timedigit = 0;
+      for(Integer i = 0; i < 24; i++){
+        //timerSelectionHours.addItem(i.toString());
+        timedigit=timedigit+(i*10000);
+      }
+      for(Integer j = 0; j < 61; j++) {
+        //timerSelectionMinutes.addItem(j.toString());
+        timedigit=timedigit+(j*100);
+      }
+      for(Integer k = 0; k < 61; k++){
+        timedigit=timedigit+k;
+        //timerSelectionSeconds.addItem(k.toString());
+      }
       //Fifth Line (Submit)
       
       JPanel fifthLine = new JPanel();
@@ -224,98 +271,19 @@ public class Main extends JFrame implements ActionListener{
         dueMonth = (String)(dueDateMonth.getSelectedItem());
         dueDay = (String)(dueDateDay.getSelectedItem());
 
+        timerHours = (String)(timerSelectionHours.getSelectedItem());
+        timerMinutes = (String)(timerSelectionMinutes.getSelectedItem());
+        timerSeconds = (String)(timerSelectionSeconds.getSelectedItem());
+
+        t.addTask(new Task(prioritySelection, (timerHours + timerMinutes + timerSeconds), name, (dueYear + dueMonth + dueDay)));
+
+        refresh();
         //Close Window
         taskFrame.dispose();
       }
     }
 
   }
-import java.util.*;
-public class Main{
-    protected ArrayList<Task> taskList = new ArrayList<Task>();
-    
-    public String toString(){
-        String s = "";
-        for(int i = 0; i < taskList.size(); i++){
-            s += "name: " + taskList.get(i).name + "\n"; //+ "\npriority: " + taskList.get(i).priority + "\ntime: " + taskList.get(i).time  + "\ndueDate: " +taskList.get(i).dueDate;
-        }
-        return s;
-    }
-    
-    public void clearArray(){
-        
-    }
-    
-    public String writeArray(){
-        String s = "";
-        for(int i = 0; i < taskList.size(); i++){
-            s += taskList.get(i).priority + "," + taskList.get(i).time  + "," + taskList.get(i).name + "," + taskList.get(i).dueDate + ",";
-        }
-        return s;
-    }
-    
-    public String addTask(Task t){//Adds a task to the arrayList that holds all tasks
-	    int i = 0;
-  	    while(i < taskList.size() && t.priority < taskList.get(i).priority){
-  	        i++;
-  	    }
-  	    taskList.add(i,t);
-        return t.name;
-	}
-	
-	public String remTask(Task t){
-	    taskList.remove(t);
-	    return t.name;
-	}
-	
-    public void createArray(String s){
-        Task temp;
-        //try{
-            for (int i = 0; i < s.split(",").length; i +=4){//loops every time a task is created
-                        taskList.add(temp = new Task(Integer.parseInt(s.split(",")[i]), Integer.parseInt(s.split(",")[i + 1]), s.split(",")[i + 2], s.split(",")[i + 3] ) );
-                        System.out.println("task added!");
-                        System.out.println("TRUE");
-            }
-            }
-        //}
-        //catch(Exception e){
-         //   System.out.println("make sure the csv has data!");
-        //}
-            
-    
-    
-   /* public void testPrint(String f){
-        File file = new File(f);
-        f.open();
-        
-    }*/
-
-    public static void main(String[] args){
-        Main m = new Main();
-        Task t = new Task(10, 40, "Task 1", "1/2/3"); 
-        Task t1 = new Task(7, 40, "Task 2", "1/2/3"); 
-        Task t2 = new Task(30, 40, "Task 3", "1/2/3"); 
-        Task t3 = new Task(1, 40, "Task 4", "1/2/3"); 
-        
-        /*m.addTask(t);
-        m.addTask(t1);
-        m.addTask(t2);
-        m.addTask(t3);
-        */
-        //System.out.println(m.writeArray());
-        System.out.println("Below");
-        
-        FileCreate f = new FileCreate();
-        f.openFile();
-        System.out.println(f.readFile());
-        m.createArray(f.readFile());
-        f.createFile();
-        f.writeTo(m.writeArray());
-        f.closeFile();
-        System.out.println("below");
-        System.out.println(m);
-    }
-}
 
   public static void main(String[] args) {
     Main GUI = new Main(); //ActionEvent must access an object
