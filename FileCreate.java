@@ -13,6 +13,7 @@ public class FileCreate{
     try{
       f = new Formatter("newFile.csv");
     }
+<<<<<<< HEAD
     catch(Exception e){
       System.out.println("Failed to create file");
     }
@@ -29,6 +30,35 @@ public class FileCreate{
     }
     catch(Exception e){
       System.out.println("error!");
+=======
+    
+    //writes to file
+    public void writeTo(String s){
+        f.format(s);
+	f.close();
+    }
+    //opens file
+    public void openFile(){
+        try{
+            s = new Scanner("newFile.csv");
+        }
+        catch(Exception e){
+            System.out.println("error!");
+        }
+    }
+    //reads File and returns a string of whatever was in the file
+    public String readFile() {
+    String s = "";
+    
+     
+    try {
+        FileReader f = new FileReader("newFile.csv");
+        BufferedReader b = new BufferedReader(f);
+        s = b.readLine();
+    }
+    catch (IOException e) {}
+    return s;
+>>>>>>> 10ebe0af5506eba4deb9532e055e67d9bf977106
     }
   }
   //reads File and returns a string of whatever was in the file
@@ -44,11 +74,21 @@ public class FileCreate{
   }
     
     
+<<<<<<< HEAD
   public static void main(String[] args){
     FileCreate f = new FileCreate();
     f.openFile();
     f.readFile();
     f.closeFile();
+=======
+    public static void main(String[] args){
+	FileCreate f = new FileCreate();
+        f.createFile();
+	f.openFile();
+	f.writeTo("10,10,Task,12/12/12");
+        System.out.println(f.readFile());
+        f.closeFile();
+>>>>>>> 10ebe0af5506eba4deb9532e055e67d9bf977106
         
   }
 }
