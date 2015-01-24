@@ -68,9 +68,9 @@ public class Main extends JFrame implements ActionListener{
     //    System.out.println("New Task");
 
     //Remove Task Button
-    JButton removeTask = new JButton("Remove Task");
-    removeTask.addActionListener(new RemoveTask());
-    removeTask.setFont(littleFont);
+    //JButton removeTask = new JButton("Remove Task");
+    //removeTask.addActionListener(new RemoveTask());
+    //removeTask.setFont(littleFont);
 
     //t.addTask(new Task("1", "111", "Math", "111"));
     //    JButton leftButton = new JButton((t.taskList.get(0).name + t.taskList.get(0).dueDate));
@@ -83,7 +83,7 @@ public class Main extends JFrame implements ActionListener{
     //    System.out.println("added Task");
     panel.add(startTimer);
     // System.out.println("added Start Timer");
-    panel.add(removeTask);
+    //panel.add(removeTask);
     frame.getContentPane().add(BorderLayout.EAST, panel);
     //   System.out.println("Get Content Pane thing");
   }
