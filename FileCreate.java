@@ -20,22 +20,29 @@ public class FileCreate{
     //writes to file
     public void writeTo(String s){
         f.format(s);
+	f.close();
     }
     //opens file
     public void openFile(){
         try{
-            s = new Scanner(new File ("newFile.csv"));
+            s = new Scanner("newFile.csv");
         }
         catch(Exception e){
             System.out.println("error!");
         }
     }
     //reads File and returns a string of whatever was in the file
-    public String readFile(){
-        while(s.hasNext()){
-            readString = s.next();
-        }
-        return readString;
+    public String readFile() {
+    String s = "";
+    
+     
+    try {
+        FileReader f = new FileReader("newFile.csv");
+        BufferedReader b = new BufferedReader(f);
+        s = b.readLine();
+    }
+    catch (IOException e) {}
+    return s;
     }
     //closes file
     public void closeFile(){
@@ -44,9 +51,11 @@ public class FileCreate{
     
     
     public static void main(String[] args){
-        FileCreate f = new FileCreate();
-        f.openFile();
-        f.readFile();
+	FileCreate f = new FileCreate();
+        f.createFile();
+	f.openFile();
+	f.writeTo("10,10,Task,12/12/12");
+        System.out.println(f.readFile());
         f.closeFile();
         
     }
