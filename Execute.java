@@ -1,4 +1,6 @@
 import java.util.*;
+import java.io.*;
+import sun.audio.*;
 
 public class Execute {
   public static void main(String[] args){
@@ -25,9 +27,11 @@ public class Execute {
     
     //create new tasks here
     Scanner s = new Scanner(System.in);
-        
+
+    //Sam is so awesome
     while(isRunning == true){
       //creating a tasks
+      m.checkDate(); //Checks if date is correct (to delete)
             
       System.out.println("Enter a new input");
       input = s.nextLine();
@@ -108,12 +112,12 @@ public class Execute {
             time.countDown();
             System.out.println("TIME'S UP!");
             try {
-            InputStream in = new FileInputStream(path);
-            AudioStream as = new AudioStream(in);
-             AudioPlayer.player.start(as);
+              InputStream in = new FileInputStream("Alarm.wav");
+              AudioStream as = new AudioStream(in);
+              AudioPlayer.player.start(as);
             }
             catch(IOException e) {
-                System.out.println(e);
+              System.out.println(e);
             }
             isRemoved = true;
           }
