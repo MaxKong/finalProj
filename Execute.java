@@ -6,7 +6,7 @@ public class Execute {
     boolean isRemoved = false; //To Check if the a task has been removed 
     String input = "";
     String refresh = "*******************************************************************\n";
-    String help = "In order to use this program, type '1' in order to create a new task.\nType '2' in order to remove a task that you have created. Type '3' in order to print a new\ntask. Type '4 in order to see these commands again. Type '5' in order to quit the program.";
+    String help = "In order to use this program, type '1' in order to create a new task.\nType '2' in order to remove a task that you have created. Type '3' in order to print a new\ntask. Type '4 in order to start a task. Type '5' in order to quit the program.";
     //Ttask timer = new Ttask();
     //Timer clock = new Timer();
     TaskList m = new TaskList();
@@ -19,7 +19,7 @@ public class Execute {
     System.out.print("Welcome to smartPlanner! This program will help you to organize your tasks and carry them ");
     System.out.println("out more efficiently. In order to use this program, type '1' in order to create a new task.");
     System.out.println("Type '2' in order to remove a task that you have created. Type '3' in order to print a new");
-    System.out.println("task. Type '4' in order to see these commands again. Type '5' in order to quit the program.");
+    System.out.println("task. Type '4' in order to start a task. Type '5' in order to quit the program.");
         
     
     
@@ -44,6 +44,7 @@ public class Execute {
         Task t = new Task(priority, time, name, date);
         m.addTask(t);
         System.out.println(refresh);
+        System.out.println(help);
       }
 
       //remove a task
@@ -68,6 +69,7 @@ public class Execute {
       else if(input.equals("3")){
         System.out.println(m);
         System.out.println(refresh);
+        System.out.println(help);
       }
             
       //begin a task
@@ -104,17 +106,29 @@ public class Execute {
           if(selected.equals(m.taskList.get(i).name)){
             Timer time = new Timer(m.taskList.get(i).time);
             time.countDown();
+            System.out.println("TIME'S UP!");
+            try {
+            InputStream in = new FileInputStream(path);
+            AudioStream as = new AudioStream(in);
+             AudioPlayer.player.start(as);
+            }
+            catch(IOException e) {
+                System.out.println(e);
+            }
+            isRemoved = true;
           }
         }
-      }
-            
-      //help
-      else if(input.equals("5")){
+        if(isRemoved == false){
+          System.out.println("A task of that name was not found!");
+        }
+        isRemoved = false;
+        System.out.println(refresh);
         System.out.println(help);
       }
+            
       //exit the program
-      else if(input.equals("6")){
-        System.out.print("goodbye");
+      else if(input.equals("5")){
+        System.out.println("goodbye");
         //rewrite the file
         f.createFile();
         f.writeTo(m.writeArray());
