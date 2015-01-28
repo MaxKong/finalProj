@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.Timer;
+import java.util.TimerTask;
 public class Execute {
     public static void main(String[] args){
         boolean isRunning = true;   // keep the code running
@@ -6,6 +8,8 @@ public class Execute {
         String input = "";
         String refresh = "*******************************************************************\n";
         String help = "In order to use this program, type '1' in order to create a new task.\nType '2' in order to remove a task that you have created. Type '3' in order to print a new\ntask. Type '4 in order to see these commands again. Type '5' in order to quit the program.";
+        Ttask timer = new Ttask();
+        Timer clock = new Timer();
         Main m = new Main();
         FileCreate f = new FileCreate();
         f.openFile();
@@ -68,14 +72,55 @@ public class Execute {
             }
             
             //begin a task
+            /*
+            else if(input.equals("4")){
+                System.out.println("What is the name of the task that you would like to start?");
+                String toRemove = s.nextLine();
+                for(int i = 0; i < m.taskList.size(); i++){
+                    if(toRemove.equals(m.taskList.get(i).name)){
+                        clock.scheduleAtFixedRate(timer, 1000, 1000);
+                        while(1 == 1){
+                            if(timer.getTime() == m.taskList.get(i).time){
+                                System.out.println("works");
+                                clock.cancel();
+                                clock.purge();
+                                break;
+                            }
+                        }
+                        System.out.println("time's up!");
+                        isRemoved = true;
+                    }
+                }
+                if(isRemoved == false){
+                    System.out.println("A task of that name was not found!");
+                }
+                isRemoved = false;
+                System.out.println(refresh);
+            }
+            */
+            else if(input.equals("4")){
+                System.out.println("What is the name of the task you want to start?");
+                String selected = s.nextLine();
+                for(int i = 0; i < m.taskList.size(); i++){
+                    if(selected.equals(m.taskList.get(i).name)){
+                        Timer time = new Timer(m.taskList.get(i).time);
+                        time.countDown();
+                    }
+                }
+            }
             
             //help
-            else if(input.equals("4")){
+            else if(input.equals("5")){
                 System.out.println(help);
             }
             //exit the program
-            else if(input.equals("5")){
-                isRunning = false;
+            else if(input.equals("6")){
+                System.out.print("goodbye");
+                //rewrite the file
+                f.createFile();
+                f.writeTo(m.writeArray());
+                f.closeFile();
+                System.exit(0);
             }
             
     
@@ -85,9 +130,7 @@ public class Execute {
         }    
         
 
-        //rewrite the file
-        f.createFile();
-        f.writeTo(m.writeArray());
-        f.closeFile();
+
+        
     }
 }
