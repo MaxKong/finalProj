@@ -8,9 +8,9 @@ public class Execute {
         String input = "";
         String refresh = "*******************************************************************\n";
         String help = "In order to use this program, type '1' in order to create a new task.\nType '2' in order to remove a task that you have created. Type '3' in order to print a new\ntask. Type '4 in order to see these commands again. Type '5' in order to quit the program.";
-        Ttask timer = new Ttask();
-        Timer clock = new Timer();
-        Main m = new Main();
+        //Ttask timer = new Ttask();
+        //Timer clock = new Timer();
+        TaskList m = new TaskList();
         FileCreate f = new FileCreate();
         f.openFile();
         System.out.println(f.readFile());
